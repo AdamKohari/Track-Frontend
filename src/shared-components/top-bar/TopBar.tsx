@@ -1,7 +1,11 @@
 import './TopBar.scss';
 import {ArrowBack, AssessmentRounded, ExitToAppOutlined} from "@material-ui/icons";
 
-function TopBar() {
+type TopBarProps = {
+    place: string
+}
+
+function TopBar({place}: TopBarProps) {
     return (
         <div className="top-bar">
             <ArrowBack className="svg-button-disabled"/>

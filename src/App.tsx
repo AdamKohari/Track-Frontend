@@ -14,28 +14,28 @@ function App() {
               <Switch>
                   <Route path="//">
                       <Suspense fallback={<LoadingFullPage />}>
-                          <TopBar />
+                          <TopBar place="login"/>
                           <Login />
                       </Suspense>
                   </Route>
 
                   <Route path="/dashboard">
                       <Suspense fallback={<LoadingFullPage />}>
-                          <TopBar />
+                          <TopBar place="dashboard"/>
                           <Dashboard />
                       </Suspense>
                   </Route>
 
-                  <Route path="/update">
+                  <Route path="/add">
                       <Suspense fallback={<LoadingFullPage />}>
-                          <TopBar />
+                          <TopBar place="add"/>
                           Forms to update data
                       </Suspense>
                   </Route>
 
                   <Route path="/graphs">
                       <Suspense fallback={<LoadingFullPage />}>
-                          <TopBar />
+                          <TopBar place="graphs"/>
                           Graphs of historical data
                       </Suspense>
                   </Route>
