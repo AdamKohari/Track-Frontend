@@ -1,0 +1,20 @@
+.top-bar {
+  background-color: #3f51b5;
+  display: flex;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  .logo {
+    display: flex;
+    align-items: center;
+
+    span:nth-child(2) {
+      font-weight: 200;
+      margin-left: 0.5rem;
+    }
+    span:nth-child(3) {
+      font-weight: 500;
+    }
+  }
+}
