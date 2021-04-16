@@ -1,0 +1,28 @@
+.login {
+  overflow: auto;
+  h1 {
+    text-align: center;
+    margin-top: 2rem;
+  }
+  .card-cont {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+  }
+  .input-field {
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem 0;
+  }
+  .action-button {
+    display: flex;
+    justify-content: center;
+    padding-top: 0.5rem;
+  }
+  .not-registered {
+    text-align: center;
+    margin-top: 2rem;
+    color: #3f51b5;
+    text-decoration: underline;
+  }
+}

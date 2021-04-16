@@ -7,21 +7,23 @@ function Dashboard () {
         <div className="dashboard">
             <h1>Hello, {'{username}'}!</h1>
 
-            <div className="dashboard-card-cont">
-                <div className="dashboard-card">
-                    <h2>Előrehaladásod üteme:</h2>
+            <div className="my-card-cont">
+                <div className="my-card">
+                    <h2>Előrehaladásod:</h2>
                     <div className="progress-circle">
                         <ProgressCircle
                             size={120}
                             value={100}/>
                     </div>
-                    <h3>{'{progress}'}%-ban terv szerint</h3>
-                    <h2 style={{marginBottom: 0}}>Ügyes!</h2>
+                    <h3>{'{progressPc}'}%-ban terv szerint</h3>
+                    <h2>Ügyes!</h2>
+                    <h4 className="last-data-title">Legfrissebb adat:</h4>
+                    <h4 className="last-data-date">{'{latestDataDate}'}</h4>
                 </div>
             </div>
 
-            <div className="dashboard-card-cont" style={{marginBottom: '1rem'}}>
-                <div className="dashboard-card">
+            <div className="my-card-cont" style={{marginBottom: '1rem'}}>
+                <div className="my-card">
                     <h2>Lehetőségek</h2>
                     <div>
                         <div className="menu-button">

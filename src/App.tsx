@@ -3,15 +3,16 @@ import './App.scss';
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 import Dashboard from "./components/dashboard/Dashboard";
 import TopBar from "./shared-components/top-bar/TopBar";
+import Login from "./components/login/Login";
 
 function App() {
   return (
-      <React.Fragment>
+      <div className="app-div">
           <TopBar />
           <BrowserRouter>
               <Switch>
                   <Route path="//">
-                      Login screen here
+                      <Login />
                   </Route>
 
                   <Route path="/dashboard">
@@ -25,9 +26,13 @@ function App() {
                   <Route path="/graphs">
                       Graphs of historical data
                   </Route>
+
+                  <Route path="*">
+                      404
+                  </Route>
               </Switch>
           </BrowserRouter>
-      </React.Fragment>
+      </div>
   );
 }
 
