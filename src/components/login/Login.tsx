@@ -9,11 +9,11 @@ function Login() {
                 <div className="my-card">
                     <form>
                         <div className="input-field">
-                            <TextField label="Felhasználónév" variant='outlined' />
+                            <TextField label="Felhasználónév" variant='outlined' fullWidth={true}/>
                         </div>
 
                         <div className="input-field">
-                            <TextField label="Jelszó" type="password" variant='outlined' />
+                            <TextField label="Jelszó" type="password" variant='outlined' fullWidth={true}/>
                         </div>
 
                         <div className="action-button">

@@ -1,30 +1,42 @@
-import React from 'react';
+import React, {lazy, Suspense} from 'react';
 import './App.scss';
 import {BrowserRouter, Switch, Route} from "react-router-dom";
-import Dashboard from "./components/dashboard/Dashboard";
-import TopBar from "./shared-components/top-bar/TopBar";
-import Login from "./components/login/Login";
+
+const Dashboard = lazy(() => import("./components/dashboard/Dashboard"))
+const TopBar = lazy(() => import("./shared-components/top-bar/TopBar"));
+const Login =  lazy(() => import ("./components/login/Login"));
 
 function App() {
   return (
       <div className="app-div">
-          <TopBar />
           <BrowserRouter>
               <Switch>
                   <Route path="//">
-                      <Login />
+                      <Suspense fallback={<div>Loading...</div>}>
+                          <TopBar />
+                          <Login />
+                      </Suspense>
                   </Route>
 
                   <Route path="/dashboard">
-                      <Dashboard />
+                      <Suspense fallback={<div>Loading...</div>}>
+                          <TopBar />
+                          <Dashboard />
+                      </Suspense>
                   </Route>
 
                   <Route path="/update">
-                      Forms to update data
+                      <Suspense fallback={<div>Loading...</div>}>
+                          <TopBar />
+                          Forms to update data
+                      </Suspense>
                   </Route>
 
                   <Route path="/graphs">
-                      Graphs of historical data
+                      <Suspense fallback={<div>Loading...</div>}>
+                          <TopBar />
+                          Graphs of historical data
+                      </Suspense>
                   </Route>
 
                   <Route path="*">
