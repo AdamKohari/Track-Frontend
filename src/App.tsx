@@ -6,6 +6,7 @@ import LoadingFullPage from "./shared-components/loading-full-page/LoadingFullPa
 const Dashboard = lazy(() => import("./components/dashboard/Dashboard"))
 const TopBar = lazy(() => import("./shared-components/top-bar/TopBar"));
 const Login =  lazy(() => import ("./components/login/Login"));
+const Registration = lazy(() => import("./components/registration/Registration"));
 
 function App() {
   return (
@@ -16,6 +17,13 @@ function App() {
                       <Suspense fallback={<LoadingFullPage />}>
                           <TopBar place="login"/>
                           <Login />
+                      </Suspense>
+                  </Route>
+
+                  <Route path="/registration">
+                      <Suspense fallback={<LoadingFullPage />}>
+                          <TopBar place="registration"/>
+                          <Registration />
                       </Suspense>
                   </Route>
 

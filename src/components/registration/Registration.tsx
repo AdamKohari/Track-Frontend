@@ -1,11 +1,10 @@
-import './Login.scss';
-import {Button, TextField} from "@material-ui/core";
-import {Link} from 'react-router-dom';
+import './Registration.scss';
+import {Button, Checkbox, FormControlLabel, TextField} from "@material-ui/core";
 
-function Login() {
+function Registration() {
     return (
-        <div className="login">
-            <h1>Bejelentkezés</h1>
+        <div className="registration">
+            <h1>Regisztráció</h1>
             <div className="card-cont" style={{marginBottom: '1rem'}}>
                 <div className="my-card">
                     <form>
@@ -17,19 +16,21 @@ function Login() {
                             <TextField label="Jelszó" type="password" variant='outlined' fullWidth={true}/>
                         </div>
 
+                        <div className="accept-checkbox">
+                            <FormControlLabel
+                                control={<Checkbox checked={false} onChange={() => {}} />}
+                                label="Elfogadom, hogy a GDPR abszolút nincs betartva itt"
+                            />
+                        </div>
+
                         <div className="action-button">
-                            <Button variant="contained" color="primary" disabled>Bejelentkezés</Button>
+                            <Button variant="contained" color="primary" disabled>Regisztráció</Button>
                         </div>
                     </form>
-
-                    <div className="not-registered">
-                        <Link to="/registration">Nem vagy még tag? Regisztrálj!</Link>
-                    </div>
                 </div>
             </div>
         </div>
     )
 }
 
-export default Login;
-
+export default Registration;
