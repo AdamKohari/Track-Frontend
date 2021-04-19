@@ -7,7 +7,7 @@ type TopBarProps = {
 }
 
 function TopBar({place}: TopBarProps) {
-    const backActive = place === 'registration' || place === 'add' || place === 'graphs';
+    const backActive = place !== 'dashboard' && place !== 'login';
     const logoutActive = place !== 'login' && place !== 'registration';
     const history = useHistory();
 

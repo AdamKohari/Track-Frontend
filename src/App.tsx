@@ -7,6 +7,7 @@ const Dashboard = lazy(() => import("./components/dashboard/Dashboard"))
 const TopBar = lazy(() => import("./shared-components/top-bar/TopBar"));
 const Login =  lazy(() => import ("./components/login/Login"));
 const Registration = lazy(() => import("./components/registration/Registration"));
+const ProgressCalendar = lazy(() => import('./components/progress-calendar/ProgressCalendar'));
 
 function App() {
   return (
@@ -45,6 +46,13 @@ function App() {
                       <Suspense fallback={<LoadingFullPage />}>
                           <TopBar place="graphs"/>
                           Graphs of historical data
+                      </Suspense>
+                  </Route>
+
+                  <Route path="/progress-calendar">
+                      <Suspense fallback={<LoadingFullPage />}>
+                          <TopBar place="progress-calendar" />
+                          <ProgressCalendar />
                       </Suspense>
                   </Route>
 

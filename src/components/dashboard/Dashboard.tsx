@@ -45,6 +45,12 @@ function Dashboard () {
 
                         <div className="menu-button">
                             <Button variant="contained"
+                                    onClick={() => navigateTo('/progress-calendar')}
+                                    color="primary">Teljesítmény naptár</Button>
+                        </div>
+
+                        <div className="menu-button">
+                            <Button variant="contained"
                                     onClick={() => navigateTo('/graphs')}
                                     color="primary">Előrehaladás grafikonok</Button>
                         </div>
