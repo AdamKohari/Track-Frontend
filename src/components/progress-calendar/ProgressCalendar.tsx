@@ -1,8 +1,14 @@
 import './ProgressCalendar.scss';
 import Calendar, {CalendarTileProperties, ViewCallbackProperties} from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import {useState} from "react";
+import {Modal} from "@material-ui/core";
+import SelectModal from "./select-modal/SelectModal";
 
 function ProgressCalendar() {
+
+    const [modalOpen, setModalOpen] = useState(false);
+    const [selectedDate, setSelectedDate] = useState({year: 0, month: 0, day: 0});
 
     const mocked = [
         {day: 11, tick: true, heart: true, cross: false},
@@ -31,7 +37,8 @@ function ProgressCalendar() {
     }
 
     function dayClicked(date: Date): void {
-        console.log(date.getDate(), date.getMonth(), date.getFullYear());
+        setSelectedDate({year: date.getFullYear(), month: date.getMonth(), day: date.getDate()});
+        setModalOpen(true);
     }
 
     function viewChanged({activeStartDate, view}: ViewCallbackProperties): void {
@@ -40,6 +47,11 @@ function ProgressCalendar() {
             const selectedYear = activeStartDate.getFullYear();
             console.log('Adatbázis lekérdezés', selectedMonth, selectedYear);
         }
+    }
+
+    function onSelectionDone(): void {
+        setModalOpen(false);
+        // TODO reload calendar with some delay
     }
 
     return (
@@ -55,6 +67,10 @@ function ProgressCalendar() {
                         tileContent={tileContent} />
                 </div>
             </div>
+
+            <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+                {<SelectModal onDone={onSelectionDone} selectedDate={selectedDate} />}
+            </Modal>
         </div>
     );
 }
