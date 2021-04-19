@@ -1,7 +1,7 @@
 import './ProgressCalendar.scss';
 import Calendar, {CalendarTileProperties, ViewCallbackProperties} from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Modal} from "@material-ui/core";
 import SelectModal from "./select-modal/SelectModal";
 
@@ -9,6 +9,15 @@ function ProgressCalendar() {
 
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState({year: 0, month: 0, day: 0});
+
+    useEffect(() => {
+        databaseGet(new Date().getFullYear(), new Date().getMonth());
+    }, []);
+
+    function databaseGet(year: number, month: number): void {
+        // TODO
+        console.log('GET: ', year, month);
+    }
 
     const mocked = [
         {day: 11, tick: true, heart: true, cross: false},
@@ -43,15 +52,18 @@ function ProgressCalendar() {
 
     function viewChanged({activeStartDate, view}: ViewCallbackProperties): void {
         if (view === 'month') {
-            const selectedMonth = activeStartDate.getMonth() + 1;
+            const selectedMonth = activeStartDate.getMonth();
             const selectedYear = activeStartDate.getFullYear();
-            console.log('Adatbázis lekérdezés', selectedMonth, selectedYear);
+            databaseGet(selectedYear, selectedMonth);
         }
     }
 
     function onSelectionDone(): void {
         setModalOpen(false);
-        // TODO reload calendar with some delay
+        // TODO set loading true here
+        setTimeout(() => {
+            databaseGet(new Date().getFullYear(), new Date().getMonth());
+        }, 1000);
     }
 
     return (
