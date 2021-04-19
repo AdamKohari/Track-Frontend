@@ -1,8 +1,15 @@
 import "./Dashboard.scss";
 import ProgressCircle from "../../shared-components/progress-circle/ProgressCircle";
 import {Button} from "@material-ui/core";
+import {useHistory} from 'react-router-dom';
 
 function Dashboard () {
+    const history = useHistory();
+
+    function navigateTo(path: string): void {
+        history.push(path);
+    }
+
     return (
         <div className="dashboard">
             <h1>Hello, {'{username}'}!</h1>
@@ -31,11 +38,15 @@ function Dashboard () {
                         </div>
 
                         <div className="menu-button">
-                            <Button variant="contained" color="primary">Adat rögzítése</Button>
+                            <Button variant="contained"
+                                    onClick={() => navigateTo('/add')}
+                                    color="primary">Adat rögzítése</Button>
                         </div>
 
                         <div className="menu-button">
-                            <Button variant="contained" color="primary">Előrehaladás grafikonok</Button>
+                            <Button variant="contained"
+                                    onClick={() => navigateTo('/graphs')}
+                                    color="primary">Előrehaladás grafikonok</Button>
                         </div>
                     </div>
                 </div>
