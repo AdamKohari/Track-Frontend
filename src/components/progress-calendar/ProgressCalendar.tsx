@@ -1,32 +1,37 @@
 import './ProgressCalendar.scss';
 import Calendar, {CalendarTileProperties, ViewCallbackProperties} from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import {useEffect, useState} from "react";
-import {Modal} from "@material-ui/core";
+import React, {useEffect, useState} from "react";
+import {CircularProgress, Modal} from "@material-ui/core";
 import SelectModal from "./select-modal/SelectModal";
+import {connect} from "react-redux";
+import {AppState} from "../../redux/reducers";
+import {loadCalendar} from "../../redux/thunks";
+import {calendarLoadingStart} from "../../redux/actions";
 
-function ProgressCalendar() {
+export type DayLog = {
+    day: number,
+    tick: boolean,
+    heart: boolean,
+    cross: boolean
+}
+type ProgressCalendarProps = {
+    isLoading: boolean,
+    dayLogs: DayLog[],
+    loadCalendar: (year: number, day: number) => void,
+    showLoadingSpinner: () => void
+}
+function ProgressCalendar({isLoading, dayLogs, loadCalendar, showLoadingSpinner}: ProgressCalendarProps) {
 
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState({year: 0, month: 0, day: 0});
 
     useEffect(() => {
-        databaseGet(new Date().getFullYear(), new Date().getMonth());
-    }, []);
-
-    function databaseGet(year: number, month: number): void {
-        // TODO
-        console.log('GET: ', year, month);
-    }
-
-    const mocked = [
-        {day: 11, tick: true, heart: true, cross: false},
-        {day: 12, tick: true, heart: false, cross: false},
-        {day: 13, tick: false, heart: false, cross: true}
-    ];
+        loadCalendar(new Date().getFullYear(), new Date().getMonth());
+    }, [loadCalendar]);
 
     function getSymbol(day: number): string {
-        const dayObj = mocked.find(item => item.day === day);
+        const dayObj = dayLogs.find(item => item.day === day);
         if (dayObj) {
             let retStr = '';
             if (dayObj.tick) retStr += '✅';
@@ -54,37 +59,62 @@ function ProgressCalendar() {
         if (view === 'month') {
             const selectedMonth = activeStartDate.getMonth();
             const selectedYear = activeStartDate.getFullYear();
-            databaseGet(selectedYear, selectedMonth);
+            loadCalendar(selectedYear, selectedMonth);
         }
     }
 
     function onSelectionDone(): void {
         setModalOpen(false);
-        // TODO set loading true here
+        showLoadingSpinner();
         setTimeout(() => {
-            databaseGet(new Date().getFullYear(), new Date().getMonth());
-        }, 1000);
+            loadCalendar(new Date().getFullYear(), new Date().getMonth());
+        }, 2000);
     }
+
+    const loadingVisible = {
+        display: isLoading ? 'flex' : 'none',
+    };
+
+    const calendarVisible = {
+        display: isLoading ? 'none' : 'flex',
+    };
 
     return (
         <div className="progress-calendar">
             <h1>Teljesítmény naptár</h1>
 
-            <div className="my-card-cont">
+            <div className="my-card-cont" style={{marginBottom: '1rem'}}>
                 <div className="my-card">
-                    <Calendar
-                        showNeighboringMonth={false}
-                        onViewChange={viewChanged}
-                        onClickDay={dayClicked}
-                        tileContent={tileContent} />
+                    <div style={calendarVisible}>
+                        <Calendar
+                            showNeighboringMonth={false}
+                            onViewChange={viewChanged}
+                            onClickDay={dayClicked}
+                            tileContent={tileContent} />
+                    </div>
+                    <div style={loadingVisible} className="loading-small">
+                        <CircularProgress variant="indeterminate" size={80} />
+                    </div>
                 </div>
             </div>
 
             <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
-                {<SelectModal onDone={onSelectionDone} selectedDate={selectedDate} />}
+                {<React.Fragment>
+                    <SelectModal onDone={onSelectionDone} selectedDate={selectedDate} />
+                </React.Fragment>}
             </Modal>
         </div>
     );
 }
 
-export default ProgressCalendar;
+const mapStateToProps = (state: AppState) => ({
+    isLoading: state.calendar.isLoading,
+    dayLogs: state.calendar.dayLogs
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+    loadCalendar: (year: number, month: number) => dispatch(loadCalendar(year, month)),
+    showLoadingSpinner: () => dispatch(calendarLoadingStart())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProgressCalendar);

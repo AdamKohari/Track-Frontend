@@ -10,7 +10,6 @@ type SelectModalProps = {
         day: number
     }
 }
-
 function SelectModal({onDone, selectedDate}: SelectModalProps) {
 
     const [selected, setSelected]: any = useState([]);
