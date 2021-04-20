@@ -27,8 +27,31 @@ export const loginToApp = (username: string, password: string) => async (dispatc
         const respJson = await resp.json();
         if (respJson.status === 'OK') {
             localStorage.setItem('authToken', respJson.authToken);
+            localStorage.setItem('username', username);
         } else {
-            dispatch(displayMessage(respJson.error,{type: "error"}));
+            dispatch(displayMessage(JSON.stringify(respJson.error),{type: "error"}));
+        }
+    } catch (ex) {
+        dispatch(displayMessage(ex.toString(), {type: "error"}));
+    }
+};
+
+export const registerToApp = (username: string, password: string) => async (dispatch: any) => {
+    try {
+        const url = BACKEND_URL + '/register';
+        const resp = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({username: username, password: password}),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+        const respJson = await resp.json();
+        if (respJson.status === 'OK') {
+            dispatch(displayMessage('Sikeres regisztráció!', {type: "success"}));
+        } else {
+            dispatch(displayMessage(JSON.stringify(respJson.error),{type: "error"}));
         }
     } catch (ex) {
         dispatch(displayMessage(ex.toString(), {type: "error"}));

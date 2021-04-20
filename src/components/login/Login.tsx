@@ -62,9 +62,8 @@ function Login({login}: LoginProps) {
 
                         <div className="action-button">
                             <Button variant="contained" color="primary"
-                                    type="submit"
                                     disabled={!formik.isValid}
-                                    >Bejelentkezés</Button>
+                                    type="submit">Bejelentkezés</Button>
                         </div>
                     </form>
 
