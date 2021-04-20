@@ -2,6 +2,8 @@ import React, {lazy, Suspense} from 'react';
 import './App.scss';
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 import LoadingFullPage from "./shared-components/loading-full-page/LoadingFullPage";
+import {ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Dashboard = lazy(() => import("./components/dashboard/Dashboard"))
 const TopBar = lazy(() => import("./shared-components/top-bar/TopBar"));
@@ -12,6 +14,7 @@ const ProgressCalendar = lazy(() => import('./components/progress-calendar/Progr
 function App() {
   return (
       <div className="app-div">
+          <ToastContainer />
           <BrowserRouter>
               <Switch>
                   <Route path="//">
