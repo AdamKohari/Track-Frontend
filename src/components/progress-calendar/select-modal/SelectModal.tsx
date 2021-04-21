@@ -1,6 +1,8 @@
 import './SelectModal.scss';
 import {Button} from "@material-ui/core";
 import {useState} from "react";
+import {connect} from "react-redux";
+import {CalendarEventJson, setCalendar} from "../../../redux/thunks";
 
 type SelectModalProps = {
     onDone: () => void,
@@ -8,9 +10,10 @@ type SelectModalProps = {
         year: number,
         month: number,
         day: number
-    }
+    },
+    setCalendar: (postData: CalendarEventJson) => void
 }
-function SelectModal({onDone, selectedDate}: SelectModalProps) {
+function SelectModal({onDone, selectedDate, setCalendar}: SelectModalProps) {
 
     const [selected, setSelected]: any = useState([]);
 
@@ -33,8 +36,7 @@ function SelectModal({onDone, selectedDate}: SelectModalProps) {
             ...selectedDate,
             selected
         };
-        // TODO send new data to backend
-        console.log(postData);
+        setCalendar(postData);
         onDone();
     }
 
@@ -62,4 +64,8 @@ function SelectModal({onDone, selectedDate}: SelectModalProps) {
     );
 }
 
-export default SelectModal;
+const mapDispatchToProps = (dispatch: any) => ({
+    setCalendar: (postData: CalendarEventJson) => dispatch(setCalendar(postData))
+});
+
+export default connect(null, mapDispatchToProps)(SelectModal);

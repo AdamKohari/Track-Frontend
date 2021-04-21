@@ -12,7 +12,7 @@ function Dashboard () {
 
     return (
         <div className="dashboard">
-            <h1>Hello, {'{username}'}!</h1>
+            <h1>Hello, {localStorage.getItem('username')}!</h1>
 
             <div className="my-card-cont">
                 <div className="my-card">

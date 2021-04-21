@@ -1,12 +1,15 @@
 import './TopBar.scss';
 import {ArrowBack, AssessmentRounded, ExitToAppOutlined} from "@material-ui/icons";
 import {useHistory} from 'react-router-dom';
+import {connect} from "react-redux";
+import {setUnauthed} from "../../redux/actions";
 
 type TopBarProps = {
-    place: string
+    place: string,
+    setUnauthed: () => void
 }
 
-function TopBar({place}: TopBarProps) {
+function TopBar({place, setUnauthed}: TopBarProps) {
     const backActive = place !== 'dashboard' && place !== 'login';
     const logoutActive = place !== 'login' && place !== 'registration';
     const history = useHistory();
@@ -24,6 +27,7 @@ function TopBar({place}: TopBarProps) {
     function logout(): void {
         if (logoutActive) {
             localStorage.clear();
+            setUnauthed();
             history.push('');
         }
     }
@@ -41,4 +45,7 @@ function TopBar({place}: TopBarProps) {
     )
 }
 
-export default TopBar;
+const mapDispatchToProps = (dispatch: any) => ({
+    setUnauthed: () => dispatch(setUnauthed())
+});
+export default connect(null, mapDispatchToProps)(TopBar);

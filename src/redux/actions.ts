@@ -34,6 +34,11 @@ export const setAuthed = () => ({
     type: SET_AUTHED
 });
 
+export const SET_UNAUTHED = 'SET_UNAUTHED';
+export const setUnauthed = () => ({
+    type: SET_UNAUTHED
+});
+
 export const START_GENERAL_LOADING = 'START_GENERAL_LOADING';
 export const startGeneralLoading = () => ({
     type: START_GENERAL_LOADING

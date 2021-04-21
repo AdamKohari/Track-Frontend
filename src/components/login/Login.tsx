@@ -7,13 +7,15 @@ import {useFormik} from "formik";
 import * as Yup from 'yup';
 import {AppState} from "../../redux/reducers";
 import React from "react";
+import {setAuthed} from "../../redux/actions";
 
 type LoginProps = {
     login: (username: string, password: string) => void,
     authed: boolean,
-    generalLoading: boolean
+    generalLoading: boolean,
+    setAuthed: () => void
 };
-function Login({login, authed, generalLoading}: LoginProps) {
+function Login({login, authed, generalLoading, setAuthed}: LoginProps) {
     const formik = useFormik({
         initialValues: {
             username: '',
@@ -35,6 +37,7 @@ function Login({login, authed, generalLoading}: LoginProps) {
     });
 
     if (localStorage.getItem('authToken')) {
+        setAuthed();
         return (
             <div>
                 <Redirect to="/dashboard" />
@@ -99,7 +102,8 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-    login: (username: string, password: string) => dispatch(loginToApp(username, password))
+    login: (username: string, password: string) => dispatch(loginToApp(username, password)),
+    setAuthed: () => dispatch(setAuthed())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

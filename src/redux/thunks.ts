@@ -14,9 +14,47 @@ const BACKEND_URL = 'http://localhost:5000';
 export const loadCalendar = (year: number, month: number) => async (dispatch: any, getState: () => AppState) => {
     try {
         dispatch(calendarLoadingStart());
-        setTimeout(() => dispatch(calendarLoadingDone([])), 3000);
+        const url = BACKEND_URL + '/calendar';
+        const resp = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('authToken') || 'NO_LOGIN'
+            }
+        });
+        const respJson = await resp.json();
+        if (respJson.status === 'OK') {
+            dispatch(calendarLoadingDone(respJson.data));
+        } else {
+            dispatch(displayMessage(JSON.stringify(respJson.error),{type: "error"}));
+        }
     } catch (ex) {
         dispatch(calendarLoadingFail());
+        dispatch(displayMessage(ex.toString(), {type: "error"}));
+    }
+};
+
+export type CalendarEventJson = { year: number, month: number, day: number, selected: string[] };
+export const setCalendar = (calendarEvent: CalendarEventJson) => async (dispatch: any) => {
+    try {
+        const url = BACKEND_URL + '/calendar';
+        const resp = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(calendarEvent),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('authToken') || 'NO_LOGIN'
+            }
+        });
+        const respJson = await resp.json();
+        if (respJson.status === 'OK') {
+            dispatch(displayMessage('Sikeres hozzáadás!', {type: "success"}));
+        } else {
+            dispatch(displayMessage(JSON.stringify(respJson.error),{type: "error"}));
+        }
+    } catch(ex) {
         dispatch(displayMessage(ex.toString(), {type: "error"}));
     }
 };

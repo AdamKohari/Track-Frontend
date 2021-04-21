@@ -3,7 +3,7 @@ import {
     CALENDAR_LOADING_FAIL,
     CALENDAR_LOADING_START, END_GENERAL_LOADING,
     myAction,
-    SET_AUTHED,
+    SET_AUTHED, SET_UNAUTHED,
     START_GENERAL_LOADING
 } from "./actions";
 import {DayLog} from "../components/progress-calendar/ProgressCalendar";
@@ -32,6 +32,12 @@ export const appRedux = (state = app_init, action: myAction) => {
             return {
                 ...state,
                 authed: true
+            }
+        }
+        case SET_UNAUTHED: {
+            return {
+                ...state,
+                authed: false
             }
         }
         case START_GENERAL_LOADING: {
