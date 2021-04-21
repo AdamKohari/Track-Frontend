@@ -34,9 +34,9 @@ function ProgressCalendar({isLoading, dayLogs, loadCalendar, showLoadingSpinner}
         const dayObj = dayLogs.find(item => item.day === day);
         if (dayObj) {
             let retStr = '';
-            if (dayObj.tick) retStr += '✅';
-            if (dayObj.cross) retStr += '❌';
-            if (dayObj.heart) retStr += '🧡';
+            if (dayObj.tick) retStr += '✅\n';
+            if (dayObj.cross) retStr += '❌\n';
+            if (dayObj.heart) retStr += '🧡\n';
             return retStr;
         }
         return '';

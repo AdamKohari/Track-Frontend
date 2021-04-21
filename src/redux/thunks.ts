@@ -1,4 +1,3 @@
-import {AppState} from "./reducers";
 import {
     calendarLoadingDone,
     calendarLoadingFail,
@@ -11,10 +10,10 @@ import {
 // const BACKEND_URL = 'http://track-you.herokuapp.com';
 const BACKEND_URL = 'http://localhost:5000';
 
-export const loadCalendar = (year: number, month: number) => async (dispatch: any, getState: () => AppState) => {
+export const loadCalendar = (year: number, month: number) => async (dispatch: any) => {
     try {
         dispatch(calendarLoadingStart());
-        const url = BACKEND_URL + '/calendar';
+        const url = BACKEND_URL + `/calendar?year=${year}&month=${month}`;
         const resp = await fetch(url, {
             method: 'GET',
             headers: {
