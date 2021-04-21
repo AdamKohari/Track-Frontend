@@ -1,15 +1,17 @@
 import './Registration.scss';
-import {Button, Checkbox, FormControlLabel, TextField} from "@material-ui/core";
+import {Button, Checkbox, CircularProgress, FormControlLabel, TextField} from "@material-ui/core";
 import {connect} from "react-redux";
 import {registerToApp} from "../../redux/thunks";
 import {useFormik} from "formik";
 import * as Yup from "yup";
-import {useState} from "react";
+import React, {useState} from "react";
+import {AppState} from "../../redux/reducers";
 
 type RegisterProps = {
-    register: (username: string, password: string) => void
+    register: (username: string, password: string) => void,
+    generalLoading: boolean
 };
-function Registration({register}: RegisterProps) {
+function Registration({register, generalLoading}: RegisterProps) {
     const [acceptedTerms, setAcceptedTerms] = useState(false);
 
     const formik = useFormik({
@@ -71,11 +73,15 @@ function Registration({register}: RegisterProps) {
                             />
                         </div>
 
-                        <div className="action-button">
-                            <Button variant="contained" type="submit"
-                                    disabled={!formik.isValid || !acceptedTerms}
-                                    color="primary">Regisztráció</Button>
-                        </div>
+                        {generalLoading
+                        ?   <div className="loading-small">
+                                <CircularProgress variant="indeterminate" size={30} />
+                            </div>
+                        :   <div className="action-button">
+                                <Button variant="contained" type="submit"
+                                        disabled={!formik.isValid || !acceptedTerms}
+                                        color="primary">Regisztráció</Button>
+                            </div>}
                     </form>
                 </div>
             </div>
@@ -83,11 +89,12 @@ function Registration({register}: RegisterProps) {
     )
 }
 
-// const mapStateToProps = (state: AppState) => ({
-// });
+const mapStateToProps = (state: AppState) => ({
+    generalLoading: state.appRedux.generalLoading
+});
 
 const mapDispatchToProps = (dispatch: any) => ({
     register: (username: string, password: string) => dispatch(registerToApp(username, password))
 });
 
-export default connect(null, mapDispatchToProps)(Registration);
+export default connect(mapStateToProps, mapDispatchToProps)(Registration);

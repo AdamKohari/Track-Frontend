@@ -1,7 +1,6 @@
 import './TopBar.scss';
 import {ArrowBack, AssessmentRounded, ExitToAppOutlined} from "@material-ui/icons";
-import {Redirect, useHistory} from 'react-router-dom';
-import {useState} from "react";
+import {useHistory} from 'react-router-dom';
 
 type TopBarProps = {
     place: string
@@ -11,7 +10,6 @@ function TopBar({place}: TopBarProps) {
     const backActive = place !== 'dashboard' && place !== 'login';
     const logoutActive = place !== 'login' && place !== 'registration';
     const history = useHistory();
-    const [exitRouteActive, setExitRouteActive] = useState(false);
 
     function back(): void {
         if (backActive) {
@@ -25,8 +23,8 @@ function TopBar({place}: TopBarProps) {
 
     function logout(): void {
         if (logoutActive) {
-            sessionStorage.clear();
-            setExitRouteActive(true);
+            localStorage.clear();
+            history.push('');
         }
     }
 
@@ -39,7 +37,6 @@ function TopBar({place}: TopBarProps) {
                 <span>You</span>
             </div>
             <ExitToAppOutlined className={logoutActive ? '' : 'svg-button-disabled'} onClick={logout}/>
-            {exitRouteActive && <Redirect to="//" />}
         </div>
     )
 }

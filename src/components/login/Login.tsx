@@ -1,15 +1,19 @@
 import './Login.scss';
-import {Button, TextField} from "@material-ui/core";
+import {Button, CircularProgress, TextField} from "@material-ui/core";
 import {Link, Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
 import {loginToApp} from "../../redux/thunks";
 import {useFormik} from "formik";
 import * as Yup from 'yup';
+import {AppState} from "../../redux/reducers";
+import React from "react";
 
 type LoginProps = {
-    login: (username: string, password: string) => void
+    login: (username: string, password: string) => void,
+    authed: boolean,
+    generalLoading: boolean
 };
-function Login({login}: LoginProps) {
+function Login({login, authed, generalLoading}: LoginProps) {
     const formik = useFormik({
         initialValues: {
             username: '',
@@ -30,7 +34,7 @@ function Login({login}: LoginProps) {
         })
     });
 
-    if (sessionStorage.getItem('authToken')) {
+    if (localStorage.getItem('authToken')) {
         return (
             <div>
                 <Redirect to="/dashboard" />
@@ -68,11 +72,15 @@ function Login({login}: LoginProps) {
                             {formik.errors.password}
                         </div>}
 
-                        <div className="action-button">
-                            <Button variant="contained" color="primary"
-                                    disabled={!formik.isValid}
-                                    type="submit">Bejelentkezés</Button>
-                        </div>
+                        {generalLoading
+                            ?   <div className="loading-small">
+                                    <CircularProgress variant="indeterminate" size={30} />
+                                </div>
+                            :   <div className="action-button">
+                                <Button variant="contained" color="primary"
+                                        disabled={!formik.isValid}
+                                        type="submit">Bejelentkezés</Button>
+                                </div>}
                     </form>
 
                     <div className="not-registered">
@@ -80,16 +88,19 @@ function Login({login}: LoginProps) {
                     </div>
                 </div>
             </div>
+            {authed && <Redirect to="/dashboard" />}
         </div>
     )
 }
 
-// const mapStateToProps = (state: AppState) => ({
-// });
+const mapStateToProps = (state: AppState) => ({
+    authed: state.appRedux.authed,
+    generalLoading: state.appRedux.generalLoading
+});
 
 const mapDispatchToProps = (dispatch: any) => ({
     login: (username: string, password: string) => dispatch(loginToApp(username, password))
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 

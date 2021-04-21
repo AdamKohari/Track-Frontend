@@ -28,3 +28,18 @@ export const CALENDAR_LOADING_FAIL = 'CALENDAR_LOADING_FAIL';
 export const calendarLoadingFail = () => ({
     type: CALENDAR_LOADING_FAIL
 });
+
+export const SET_AUTHED = 'SET_AUTHED';
+export const setAuthed = () => ({
+    type: SET_AUTHED
+});
+
+export const START_GENERAL_LOADING = 'START_GENERAL_LOADING';
+export const startGeneralLoading = () => ({
+    type: START_GENERAL_LOADING
+});
+
+export const END_GENERAL_LOADING = 'END_GENERAL_LOADING';
+export const endGeneralLoading = () => ({
+    type: END_GENERAL_LOADING
+});
