@@ -1,10 +1,13 @@
 import "./Dashboard.scss";
 import ProgressCircle from "../../shared-components/progress-circle/ProgressCircle";
-import {Button} from "@material-ui/core";
+import {Button, Modal} from "@material-ui/core";
 import {useHistory} from 'react-router-dom';
+import React, {useState} from "react";
+import EditPlanModal from "./edit-plan-modal/EditPlanModal";
 
 function Dashboard () {
     const history = useHistory();
+    const [modalOpen, setModalOpen] = useState(false);
 
     function navigateTo(path: string): void {
         history.push(path);
@@ -34,7 +37,9 @@ function Dashboard () {
                     <h2>Lehetőségek</h2>
                     <div>
                         <div className="menu-button">
-                            <Button variant="contained" color="primary">Terv módosítása</Button>
+                            <Button variant="contained"
+                                    onClick={() => setModalOpen(true)}
+                                    color="primary">Terv módosítása</Button>
                         </div>
 
                         <div className="menu-button">
@@ -57,6 +62,11 @@ function Dashboard () {
                     </div>
                 </div>
             </div>
+            <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+                {<React.Fragment>
+                    <EditPlanModal close={() => setModalOpen(false)}/>
+                </React.Fragment>}
+            </Modal>
         </div>
     )
 }

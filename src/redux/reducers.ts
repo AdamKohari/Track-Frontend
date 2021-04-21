@@ -11,7 +11,8 @@ import {DayLog} from "../components/progress-calendar/ProgressCalendar";
 export type AppState = {
     appRedux: {
         authed: boolean,
-        generalLoading: boolean
+        generalLoading: boolean,
+        trackedFields: string[]
     }
     calendar: {
         dayLogs: DayLog[],
@@ -21,7 +22,8 @@ export type AppState = {
 
 const app_init = {
     authed: false,
-    generalLoading: false
+    generalLoading: false,
+    trackedFields: []
 }
 
 export const appRedux = (state = app_init, action: myAction) => {
