@@ -1,6 +1,6 @@
 import './Login.scss';
 import {Button, TextField} from "@material-ui/core";
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
 import {loginToApp} from "../../redux/thunks";
 import {useFormik} from "formik";
@@ -29,6 +29,14 @@ function Login({login}: LoginProps) {
                 .min(6, 'A jelszó minimális hossza 6 karakter!')
         })
     });
+
+    if (sessionStorage.getItem('authToken')) {
+        return (
+            <div>
+                <Redirect to="/dashboard" />
+            </div>
+        );
+    }
 
     return (
         <div className="login">

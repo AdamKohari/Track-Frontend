@@ -1,7 +1,8 @@
 import {AppState} from "./reducers";
 import {calendarLoadingDone, calendarLoadingFail, calendarLoadingStart, displayMessage} from "./actions";
 
-const BACKEND_URL = 'http://track-you.herokuapp.com';
+// const BACKEND_URL = 'http://track-you.herokuapp.com';
+const BACKEND_URL = 'localhost:5000';
 
 export const loadCalendar = (year: number, month: number) => async (dispatch: any, getState: () => AppState) => {
     try {
@@ -26,8 +27,8 @@ export const loginToApp = (username: string, password: string) => async (dispatc
         });
         const respJson = await resp.json();
         if (respJson.status === 'OK') {
-            localStorage.setItem('authToken', respJson.authToken);
-            localStorage.setItem('username', username);
+            sessionStorage.setItem('authToken', respJson.authToken);
+            sessionStorage.setItem('username', username);
         } else {
             dispatch(displayMessage(JSON.stringify(respJson.error),{type: "error"}));
         }
