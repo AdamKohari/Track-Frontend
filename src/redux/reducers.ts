@@ -12,7 +12,12 @@ export type AppState = {
     appRedux: {
         authed: boolean,
         generalLoading: boolean,
-        trackedFields: string[]
+        trackedFields: string[],
+        mainGoal: {
+            field: string,
+            value: number,
+            due: string
+        }
     }
     calendar: {
         dayLogs: DayLog[],
@@ -23,7 +28,12 @@ export type AppState = {
 const app_init = {
     authed: false,
     generalLoading: false,
-    trackedFields: []
+    trackedFields: [],
+    mainGoal: {
+        field: '',
+        value: 0.0,
+        due: ''
+    }
 }
 
 export const appRedux = (state = app_init, action: myAction) => {

@@ -1,14 +1,19 @@
 import './EditPlanModal.scss';
-import {Button, Select, TextField} from "@material-ui/core";
+import {Button, MenuItem, Select, TextField} from "@material-ui/core";
 import React, {useState} from "react";
 import {connect} from "react-redux";
 import {AppState} from "../../../redux/reducers";
 
 type EditPlanModalProps = {
     close: () => void,
-    trackedFields: string[]
+    trackedFields: string[],
+    mainGoal: {
+        field: string,
+        value: number,
+        due: string
+    }
 };
-function EditPlanModal({close, trackedFields}: EditPlanModalProps) {
+function EditPlanModal({close, trackedFields, mainGoal}: EditPlanModalProps) {
     const [newDataType, setNewDataType] = useState('');
 
     return (
@@ -34,16 +39,20 @@ function EditPlanModal({close, trackedFields}: EditPlanModalProps) {
                 <h3>A cél:</h3>
                 <div>E mező:</div>
                 <div>
-                    <Select variant="outlined" fullWidth={true}>
+                    <Select variant="outlined" fullWidth={true} value={mainGoal.field}
+                            disabled={trackedFields.length === 0}>
+                        { trackedFields.map(field => <MenuItem value={field}>{field}</MenuItem>) }
                     </Select>
                 </div>
                 <div style={{marginTop: '1rem'}}>Legyen:</div>
                 <div>
-                    <TextField type="number" fullWidth={true} variant="outlined" />
+                    <TextField type="number" fullWidth={true} variant="outlined"
+                               value={mainGoal.value} disabled={trackedFields.length === 0}/>
                 </div>
                 <div style={{marginTop: '1rem'}}>Eddigre:</div>
                 <div>
-                    <TextField type="date" fullWidth={true} variant="outlined" />
+                    <TextField type="date" fullWidth={true} variant="outlined"
+                               value={mainGoal.due} disabled={trackedFields.length === 0}/>
                 </div>
                 <div className="save-plan-button">
                     <Button
@@ -60,7 +69,8 @@ function EditPlanModal({close, trackedFields}: EditPlanModalProps) {
 }
 
 const mapStateToProps = (state: AppState) => ({
-    trackedFields: state.appRedux.trackedFields
+    trackedFields: state.appRedux.trackedFields,
+    mainGoal: state.appRedux.mainGoal
 });
 
 export default connect(mapStateToProps)(EditPlanModal);

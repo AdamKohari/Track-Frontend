@@ -7,8 +7,8 @@ import {
     startGeneralLoading
 } from "./actions";
 
-// const BACKEND_URL = 'http://track-you.herokuapp.com';
-const BACKEND_URL = 'http://localhost:5000';
+const BACKEND_URL = 'http://track-you.herokuapp.com';
+// const BACKEND_URL = 'http://localhost:5000';
 
 export const loadCalendar = (year: number, month: number) => async (dispatch: any) => {
     try {
