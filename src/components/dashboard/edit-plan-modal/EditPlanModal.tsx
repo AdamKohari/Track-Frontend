@@ -12,11 +12,12 @@ type EditPlanModalProps = {
     trackedFields: string[],
     mainGoal: {
         field: string,
+        initValue: number,
         value: number,
         due: string
     },
     addNewDataType: (datatype: string[]) => void,
-    saveMainGoal: (mainGoal: {field: string, value: number, due: string}) => void,
+    saveMainGoal: (mainGoal: {field: string, initValue: number, value: number, due: string}) => void,
     generalLoading: boolean
 };
 function EditPlanModal({close, trackedFields, mainGoal, addNewDataType, saveMainGoal, generalLoading}: EditPlanModalProps) {
@@ -24,6 +25,7 @@ function EditPlanModal({close, trackedFields, mainGoal, addNewDataType, saveMain
     const formik = useFormik({
         initialValues: {
             field: mainGoal.field,
+            initValue: mainGoal.initValue,
             value: mainGoal.value,
             due: mainGoal.due
         },
@@ -32,6 +34,7 @@ function EditPlanModal({close, trackedFields, mainGoal, addNewDataType, saveMain
         },
         validationSchema: Yup.object({
             field: Yup.string().required('Kötelező mező!'),
+            initValue: Yup.number().required('Kötelező mező!'),
             value: Yup.number().required('Kötelező mező!'),
             due: Yup.date().required('Kötelező mező!')
         })
@@ -78,7 +81,20 @@ function EditPlanModal({close, trackedFields, mainGoal, addNewDataType, saveMain
                     </div>}
                 </div>
 
-                <div style={{marginTop: '1rem'}}>Legyen:</div>
+                <div style={{marginTop: '1rem'}}>Ennyiről:</div>
+                <div>
+                    <TextField type="number" fullWidth={true} variant="outlined"
+                               value={formik.values.initValue}
+                               onChange={formik.handleChange}
+                               onBlur={formik.handleBlur}
+                               name="initValue" disabled={trackedFields.length === 0}/>
+                    { formik.touched.initValue && formik.errors.initValue &&
+                    <div className="validation-error">
+                        {formik.errors.initValue}
+                    </div>}
+                </div>
+
+                <div style={{marginTop: '1rem'}}>Ennyi legyen:</div>
                 <div>
                     <TextField type="number" fullWidth={true} variant="outlined"
                                value={formik.values.value}
@@ -136,7 +152,7 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = (dispatch: any) => ({
     addNewDataType: (datatype: string[]) => dispatch(setUserData({
         isDataType: true, dataType: datatype})),
-    saveMainGoal: (values: {field: string, value: number, due: string}) => dispatch(setUserData({
+    saveMainGoal: (values: {field: string, initValue: number, value: number, due: string}) => dispatch(setUserData({
         isDataType: false, mainGoal: values}))
 });
 

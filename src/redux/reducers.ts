@@ -15,6 +15,7 @@ export type AppState = {
         trackedFields: string[],
         mainGoal: {
             field: string,
+            initValue: number,
             value: number,
             due: string
         },
@@ -36,6 +37,7 @@ const app_init = {
     trackedFields: [],
     mainGoal: {
         field: '',
+        initValue: 0,
         value: 0,
         due: ''
     },

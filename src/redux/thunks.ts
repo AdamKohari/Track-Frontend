@@ -115,7 +115,7 @@ export const registerToApp = (username: string, password: string) => async (disp
 export type userDataJson = {
     isDataType: boolean,
     dataType?: string[],
-    mainGoal?: { field: string, value: number, due: string }
+    mainGoal?: { field: string, initValue: number, value: number, due: string }
 }
 export const setUserData = (postObj: userDataJson) => async (dispatch: any) => {
     try {
