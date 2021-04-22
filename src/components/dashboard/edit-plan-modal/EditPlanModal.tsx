@@ -66,7 +66,7 @@ function EditPlanModal({close, trackedFields, mainGoal, addNewDataType, saveMain
 
             <form onSubmit={formik.handleSubmit}>
                 <h3>A cél:</h3>
-                <div>E mező:</div>
+                <div>Mező:</div>
                 <div>
                     <Select variant="outlined" fullWidth={true} name="field"
                             value={formik.values.field}
@@ -81,7 +81,7 @@ function EditPlanModal({close, trackedFields, mainGoal, addNewDataType, saveMain
                     </div>}
                 </div>
 
-                <div style={{marginTop: '1rem'}}>Ennyiről:</div>
+                <div style={{marginTop: '1rem'}}>Kezdő érték:</div>
                 <div>
                     <TextField type="number" fullWidth={true} variant="outlined"
                                value={formik.values.initValue}
@@ -94,7 +94,7 @@ function EditPlanModal({close, trackedFields, mainGoal, addNewDataType, saveMain
                     </div>}
                 </div>
 
-                <div style={{marginTop: '1rem'}}>Ennyi legyen:</div>
+                <div style={{marginTop: '1rem'}}>Célzott érték:</div>
                 <div>
                     <TextField type="number" fullWidth={true} variant="outlined"
                                value={formik.values.value}
@@ -107,7 +107,7 @@ function EditPlanModal({close, trackedFields, mainGoal, addNewDataType, saveMain
                     </div>}
                 </div>
 
-                <div style={{marginTop: '1rem'}}>Eddig:</div>
+                <div style={{marginTop: '1rem'}}>Határidő:</div>
                 <div>
                     <TextField type="date" fullWidth={true} variant="outlined"
                                value={formik.values.due}

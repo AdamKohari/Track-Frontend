@@ -30,6 +30,9 @@ function Dashboard ({mainGoal, latestMainData, goalStart, getUserData, generalLo
     function calculatePercent(): number {
         // @ts-ignore
         const timePassed = new Date(latestMainData.date) - new Date(goalStart);
+        if (timePassed === 0) {
+            return 100;
+        }
         // @ts-ignore
         const availableTime = new Date(mainGoal.due) - new Date(goalStart);
         const timePassedRatio = timePassed / availableTime;
@@ -57,7 +60,7 @@ function Dashboard ({mainGoal, latestMainData, goalStart, getUserData, generalLo
                                     <div className="progress-circle">
                                         <ProgressCircle
                                             size={120}
-                                            value={percent}/>
+                                            value={percent > 100 ? 100 : percent}/>
                                     </div>
                                     <h3>{percent}%-ban terv szerint</h3>
                                 </div> }
