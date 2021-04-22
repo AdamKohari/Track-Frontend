@@ -4,7 +4,7 @@ import {
     CALENDAR_LOADING_START, END_GENERAL_LOADING,
     myAction,
     SET_AUTHED, SET_UNAUTHED,
-    START_GENERAL_LOADING
+    START_GENERAL_LOADING, USER_DATA_LOADED
 } from "./actions";
 import {DayLog} from "../components/progress-calendar/ProgressCalendar";
 
@@ -17,7 +17,12 @@ export type AppState = {
             field: string,
             value: number,
             due: string
-        }
+        },
+        latestMainData: {
+            date: string,
+            value: number
+        },
+        goalStart: string
     }
     calendar: {
         dayLogs: DayLog[],
@@ -31,38 +36,50 @@ const app_init = {
     trackedFields: [],
     mainGoal: {
         field: '',
-        value: 0.0,
+        value: 0,
         due: ''
-    }
+    },
+    latestMainData: {
+        date: '',
+        value: 0
+    },
+    goalStart: ''
 }
 
 export const appRedux = (state = app_init, action: myAction) => {
-    const {type} = action;
+    const {type, payload} = action;
 
     switch (type) {
         case SET_AUTHED: {
             return {
                 ...state,
                 authed: true
-            }
+            };
         }
         case SET_UNAUTHED: {
             return {
                 ...state,
                 authed: false
-            }
+            };
         }
         case START_GENERAL_LOADING: {
             return  {
                 ...state,
                 generalLoading: true
-            }
+            };
         }
         case END_GENERAL_LOADING: {
             return {
                 ...state,
                 generalLoading: false
-            }
+            };
+        }
+        case USER_DATA_LOADED: {
+            const { userData } = payload;
+            return {
+                ...state,
+                ...userData
+            };
         }
         default: {
             return state;

@@ -48,3 +48,9 @@ export const END_GENERAL_LOADING = 'END_GENERAL_LOADING';
 export const endGeneralLoading = () => ({
     type: END_GENERAL_LOADING
 });
+
+export const USER_DATA_LOADED = 'USER_DATA_LOADED';
+export const userDataLoaded = (userData: any) => ({
+    type: USER_DATA_LOADED,
+    payload: { userData }
+});

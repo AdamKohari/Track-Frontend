@@ -4,11 +4,11 @@ import {
     calendarLoadingStart,
     displayMessage, endGeneralLoading,
     setAuthed,
-    startGeneralLoading
+    startGeneralLoading, userDataLoaded
 } from "./actions";
 
-const BACKEND_URL = 'http://track-you.herokuapp.com';
-// const BACKEND_URL = 'http://localhost:5000';
+// const BACKEND_URL = 'http://track-you.herokuapp.com';
+const BACKEND_URL = 'http://localhost:5000';
 
 export const loadCalendar = (year: number, month: number) => async (dispatch: any) => {
     try {
@@ -105,6 +105,66 @@ export const registerToApp = (username: string, password: string) => async (disp
         } else {
             dispatch(displayMessage(JSON.stringify(respJson.error),{type: "error"}));
             dispatch(endGeneralLoading());
+        }
+    } catch (ex) {
+        dispatch(endGeneralLoading());
+        dispatch(displayMessage(ex.toString(), {type: "error"}));
+    }
+};
+
+export type userDataJson = {
+    isDataType: boolean,
+    dataType?: string[],
+    mainGoal?: { field: string, value: number, due: string }
+}
+export const setUserData = (postObj: userDataJson) => async (dispatch: any) => {
+    try {
+        dispatch(startGeneralLoading());
+        const url = BACKEND_URL + '/profileInfo';
+        const resp = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(postObj),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('authToken') || 'NO_LOGIN'
+            }
+        });
+        const respJson = await resp.json();
+        if (respJson.status === 'OK') {
+            dispatch(displayMessage('Mentve!', {type: "success"}));
+            setTimeout(() => {
+                dispatch(getUserData());
+            }, 2000);
+        } else {
+            dispatch(displayMessage(JSON.stringify(respJson.error),{type: "error"}));
+            dispatch(endGeneralLoading());
+        }
+    } catch (ex) {
+        dispatch(endGeneralLoading());
+        dispatch(displayMessage(ex.toString(), {type: "error"}));
+    }
+};
+
+export const getUserData = () => async (dispatch: any) => {
+    try {
+        dispatch(startGeneralLoading());
+        const url = BACKEND_URL + '/profileInfo';
+        const resp = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('authToken') || 'NO_LOGIN'
+            }
+        });
+        const respJson = await resp.json();
+        if (respJson.status === 'OK') {
+            dispatch(userDataLoaded(respJson.data));
+            dispatch(endGeneralLoading());
+        } else {
+            dispatch(endGeneralLoading());
+            dispatch(displayMessage(JSON.stringify(respJson.error),{type: "error"}));
         }
     } catch (ex) {
         dispatch(endGeneralLoading());

@@ -2,15 +2,40 @@ import "./Dashboard.scss";
 import ProgressCircle from "../../shared-components/progress-circle/ProgressCircle";
 import {Button, Modal} from "@material-ui/core";
 import {useHistory} from 'react-router-dom';
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import EditPlanModal from "./edit-plan-modal/EditPlanModal";
+import {connect} from "react-redux";
+import {AppState} from "../../redux/reducers";
+import {getUserData} from "../../redux/thunks";
 
-function Dashboard () {
+type DashboardProps = {
+    mainGoal: {field: string, value: number, due: string},
+    latestMainData: {date: string, value: number},
+    goalStart: string,
+    getUserData: () => void
+}
+function Dashboard ({mainGoal, latestMainData, goalStart, getUserData}: DashboardProps) {
+    useEffect(() => {
+        getUserData();
+    }, [getUserData]);
+
     const history = useHistory();
     const [modalOpen, setModalOpen] = useState(false);
 
     function navigateTo(path: string): void {
         history.push(path);
+    }
+
+    function calculatePercent(): number {
+        // @ts-ignore
+        const timePassed = new Date(latestMainData.date) - new Date(goalStart);
+        // @ts-ignore
+        const allTime = new Date(mainGoal.due) - new Date(goalStart);
+        const timePassedRatio = timePassed / allTime;
+        const progressRatio = latestMainData.value / mainGoal.value;
+        console.log('LOG: ', (progressRatio / timePassedRatio) * 100);
+        return (progressRatio / timePassedRatio) * 100;
+
     }
 
     return (
@@ -23,12 +48,16 @@ function Dashboard () {
                     <div className="progress-circle">
                         <ProgressCircle
                             size={120}
-                            value={100}/>
+                            value={calculatePercent()}/>
                     </div>
-                    <h3>{'{progressPc}'}%-ban terv szerint</h3>
+                    <h3>{calculatePercent()}%-ban terv szerint</h3>
                     <h2>Ügyes!</h2>
                     <h4 className="last-data-title">Legfrissebb adat:</h4>
-                    <h4 className="last-data-date">{'{latestDataDate}'}</h4>
+                    <h4 className="last-data-date">
+                        {latestMainData.date
+                            ? new Date(latestMainData.date).toLocaleDateString()
+                            : 'N/A'}
+                    </h4>
                 </div>
             </div>
 
@@ -71,4 +100,14 @@ function Dashboard () {
     )
 }
 
-export default Dashboard;
+const mapStateToProps = (state: AppState) => ({
+    mainGoal: state.appRedux.mainGoal,
+    latestMainData: state.appRedux.latestMainData,
+    goalStart: state.appRedux.goalStart
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+    getUserData: () => dispatch(getUserData())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
