@@ -1,13 +1,17 @@
 import {
     CALENDAR_LOADING_DONE,
     CALENDAR_LOADING_FAIL,
-    CALENDAR_LOADING_START, END_GENERAL_LOADING,
+    CALENDAR_LOADING_START, DATA_LOGS_LOADED, END_GENERAL_LOADING,
     myAction,
     SET_AUTHED, SET_UNAUTHED,
     START_GENERAL_LOADING, USER_DATA_LOADED
 } from "./actions";
 import {DayLog} from "../components/progress-calendar/ProgressCalendar";
 
+export type DataLog = {
+    date: string,
+    data: any
+};
 export type AppState = {
     appRedux: {
         authed: boolean,
@@ -23,7 +27,8 @@ export type AppState = {
             date: string,
             value: number
         },
-        goalStart: string
+        goalStart: string,
+        dataLogs: DataLog[]
     }
     calendar: {
         dayLogs: DayLog[],
@@ -45,7 +50,8 @@ const app_init = {
         date: '',
         value: 0
     },
-    goalStart: ''
+    goalStart: '',
+    dataLogs: []
 }
 
 export const appRedux = (state = app_init, action: myAction) => {
@@ -81,6 +87,13 @@ export const appRedux = (state = app_init, action: myAction) => {
             return {
                 ...state,
                 ...userData
+            };
+        }
+        case DATA_LOGS_LOADED: {
+            const { dataLogs } = payload;
+            return {
+                ...state,
+                dataLogs: dataLogs
             };
         }
         default: {

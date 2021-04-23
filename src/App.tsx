@@ -5,6 +5,7 @@ import LoadingFullPage from "./shared-components/loading-full-page/LoadingFullPa
 import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AddLog from "./components/add/AddLog";
+import Graphs from "./components/graphs/Graphs";
 
 const Dashboard = lazy(() => import("./components/dashboard/Dashboard"))
 const TopBar = lazy(() => import("./shared-components/top-bar/TopBar"));
@@ -49,7 +50,7 @@ function App() {
                   <Route path="/graphs">
                       <Suspense fallback={<LoadingFullPage />}>
                           <TopBar place="graphs"/>
-                          Graphs of historical data
+                          <Graphs />
                       </Suspense>
                   </Route>
 

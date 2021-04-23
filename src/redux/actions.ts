@@ -1,4 +1,5 @@
 import {toast, ToastOptions} from "react-toastify";
+import {DataLog} from "./reducers";
 
 export type myAction = {
     type: string,
@@ -53,4 +54,10 @@ export const USER_DATA_LOADED = 'USER_DATA_LOADED';
 export const userDataLoaded = (userData: any) => ({
     type: USER_DATA_LOADED,
     payload: { userData }
+});
+
+export const DATA_LOGS_LOADED = 'DATA_LOGS_LOADED';
+export const dataLogsLoaded = (dataLogs: DataLog[]) => ({
+    type: DATA_LOGS_LOADED,
+    payload: { dataLogs }
 });

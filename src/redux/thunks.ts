@@ -1,15 +1,15 @@
 import {
     calendarLoadingDone,
     calendarLoadingFail,
-    calendarLoadingStart,
+    calendarLoadingStart, dataLogsLoaded,
     displayMessage, endGeneralLoading,
     setAuthed,
     startGeneralLoading, userDataLoaded
 } from "./actions";
 import {AppState} from "./reducers";
 
-// const BACKEND_URL = 'http://track-you.herokuapp.com';
-const BACKEND_URL = 'http://localhost:5000';
+const BACKEND_URL = 'http://track-you.herokuapp.com';
+// const BACKEND_URL = 'http://localhost:5000';
 
 export const loadCalendar = (year: number, month: number) => async (dispatch: any) => {
     try {
@@ -174,7 +174,29 @@ export const getUserData = () => async (dispatch: any) => {
 };
 
 export const getDataLogs = () => async (dispatch: any) => {
-
+    try {
+        dispatch(startGeneralLoading());
+        const url = BACKEND_URL + '/dataLogs';
+        const resp = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('authToken') || 'NO_LOGIN'
+            }
+        });
+        const respJson = await resp.json();
+        if (respJson.status === 'OK') {
+            dispatch(dataLogsLoaded(respJson.data));
+            dispatch(endGeneralLoading());
+        } else {
+            dispatch(endGeneralLoading());
+            dispatch(displayMessage(JSON.stringify(respJson.error),{type: "error"}));
+        }
+    } catch (ex) {
+        dispatch(endGeneralLoading());
+        dispatch(displayMessage(ex.toString(), {type: "error"}));
+    }
 };
 
 export const setDataLog = (fieldsObject: any) => async (dispatch: any, getState: () => AppState) => {

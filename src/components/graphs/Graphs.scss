@@ -1,0 +1,22 @@
+.graphs {
+  overflow: auto;
+  h1 {
+    text-align: center;
+    margin-top: 2rem;
+  }
+  h3 {
+    font-weight: bold;
+    text-align: center;
+    margin-top: 2rem;
+    border-top: 1px solid #CECECE;
+    padding: 1rem 0;
+    margin-bottom: 0.5rem;
+  }
+  .data-log-table {
+    .row {
+      display: flex;
+      margin: 0.5rem 0;
+      justify-content: space-between;
+    }
+  }
+}
