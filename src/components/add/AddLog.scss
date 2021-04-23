@@ -4,4 +4,20 @@
     text-align: center;
     margin-top: 2rem;
   }
+  .log-input-field {
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+    span {
+      width: 30%;
+    }
+    > div {
+      width: 70%;
+    }
+  }
+  .save-button-cont {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+  }
 }

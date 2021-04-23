@@ -6,6 +6,7 @@ import {
     setAuthed,
     startGeneralLoading, userDataLoaded
 } from "./actions";
+import {AppState} from "./reducers";
 
 // const BACKEND_URL = 'http://track-you.herokuapp.com';
 const BACKEND_URL = 'http://localhost:5000';
@@ -165,6 +166,58 @@ export const getUserData = () => async (dispatch: any) => {
         } else {
             dispatch(endGeneralLoading());
             dispatch(displayMessage(JSON.stringify(respJson.error),{type: "error"}));
+        }
+    } catch (ex) {
+        dispatch(endGeneralLoading());
+        dispatch(displayMessage(ex.toString(), {type: "error"}));
+    }
+};
+
+export const getDataLogs = () => async (dispatch: any) => {
+
+};
+
+export const setDataLog = (fieldsObject: any) => async (dispatch: any, getState: () => AppState) => {
+    const nonEmptyFields: any = {};
+    let numOfFields = 0;
+    Object.keys(fieldsObject).forEach(key => {
+       if (fieldsObject[key] !== '' && key !== 'date') {
+           nonEmptyFields[key] = fieldsObject[key];
+           numOfFields++;
+       }
+    });
+    if (numOfFields === 0) {
+        dispatch(displayMessage('Kérlek adj meg legalább 1 értéket!', {type: "warning"}));
+        return;
+    }
+
+    try {
+        const postJson = {
+            date: fieldsObject.date,
+            mainField: getState().appRedux.mainGoal.field,
+            data: nonEmptyFields
+        };
+
+        dispatch(startGeneralLoading());
+        const url = BACKEND_URL + '/dataLogs';
+        const resp = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(postJson),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('authToken') || 'NO_LOGIN'
+            }
+        });
+        const respJson = await resp.json();
+        if (respJson.status === 'OK') {
+            dispatch(displayMessage('Adat rögzítve!', {type: "success"}));
+            setTimeout(() => {
+                dispatch(getUserData());
+            }, 2000);
+        } else {
+            dispatch(displayMessage(JSON.stringify(respJson.error),{type: "error"}));
+            dispatch(endGeneralLoading());
         }
     } catch (ex) {
         dispatch(endGeneralLoading());
