@@ -43,7 +43,7 @@ function EditPlanModal({close, trackedFields, mainGoal, addNewDataType, saveMain
     return (
         <div className="edit-plan-modal">
             <h2>A terved</h2>
-            <h3>A trackelt adatok:</h3>
+            <h3>Trackelt adattípusaid:</h3>
             <div>
                 {trackedFields.length > 0
                 ?   <span>{trackedFields.join(', ')}</span>
@@ -66,7 +66,7 @@ function EditPlanModal({close, trackedFields, mainGoal, addNewDataType, saveMain
 
             <form onSubmit={formik.handleSubmit}>
                 <h3>A cél:</h3>
-                <div>Mező:</div>
+                <div>Adattípus:</div>
                 <div>
                     <Select variant="outlined" fullWidth={true} name="field"
                             value={formik.values.field}
