@@ -7,7 +7,6 @@
   h3 {
     font-weight: bold;
     text-align: center;
-    margin-top: 2rem;
     border-top: 1px solid #CECECE;
     padding: 1rem 0;
     margin-bottom: 0.5rem;
@@ -18,5 +17,8 @@
       margin: 0.5rem 0;
       justify-content: space-between;
     }
+  }
+  .chart-cont {
+    margin-top: 1.5rem;
   }
 }

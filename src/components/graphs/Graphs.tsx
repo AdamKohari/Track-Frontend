@@ -4,6 +4,8 @@ import {connect} from "react-redux";
 import {AppState, DataLog} from "../../redux/reducers";
 import {getDataLogs} from "../../redux/thunks";
 import {CircularProgress, MenuItem, Select} from "@material-ui/core";
+import Chart from 'react-apexcharts';
+import {ApexOptions} from "apexcharts";
 
 type GraphsProps = {
     trackedFields: string[],
@@ -12,6 +14,13 @@ type GraphsProps = {
     dataLogs: DataLog[]
 };
 function Graphs({trackedFields, generalLoading, getDataLogs, dataLogs}: GraphsProps) {
+
+    const chartOptions: ApexOptions = {
+        chart: {height: 350, type: 'line', zoom: {enabled: false}},
+        dataLabels: {enabled: false},
+        stroke: {curve: 'straight'},
+        grid: {row: {colors: ['#f3f3f3', 'transparent'], opacity: 0.5}}
+    };
 
     const [selectedType, setSelectedType] = useState('NONE');
     const [dateDataPairs, setDateDataPairs] = useState([] as DataPair[]);
@@ -37,6 +46,14 @@ function Graphs({trackedFields, generalLoading, getDataLogs, dataLogs}: GraphsPr
         setDateDataPairs(dataPairs);
     }
 
+    const series = [{
+        name: 'Érték',
+        data: dateDataPairs.map(pair => pair.value)
+    }];
+    chartOptions.xaxis = {
+        categories: dateDataPairs.map(pair => pair.date)
+    };
+
     const content = (
         <div>
             <Select variant="outlined" fullWidth={true} value={selectedType}
@@ -47,6 +64,9 @@ function Graphs({trackedFields, generalLoading, getDataLogs, dataLogs}: GraphsPr
             <div>
                 {dateDataPairs.length !== 0 &&
                 <React.Fragment>
+                    <div className="chart-cont">
+                        <Chart options={chartOptions} series={series} type="line" height={350} />
+                    </div>
                     <h3>Adatelőzmények:</h3>
                     <div className="data-log-table">
                         {dateDataPairs.map((pair, id) => (
