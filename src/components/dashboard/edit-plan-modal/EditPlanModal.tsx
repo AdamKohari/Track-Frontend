@@ -24,10 +24,10 @@ function EditPlanModal({close, trackedFields, mainGoal, addNewDataType, saveMain
     const [newDataType, setNewDataType] = useState('');
     const formik = useFormik({
         initialValues: {
-            field: mainGoal.field,
-            initValue: mainGoal.initValue,
-            value: mainGoal.value,
-            due: mainGoal.due
+            field: mainGoal.field || '',
+            initValue: mainGoal.initValue || 0,
+            value: mainGoal.value || 0,
+            due: mainGoal.due || ''
         },
         onSubmit: (values) => {
             saveMainGoal(values);

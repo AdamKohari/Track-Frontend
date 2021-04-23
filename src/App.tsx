@@ -4,6 +4,7 @@ import {BrowserRouter, Switch, Route} from "react-router-dom";
 import LoadingFullPage from "./shared-components/loading-full-page/LoadingFullPage";
 import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AddLog from "./components/add/AddLog";
 
 const Dashboard = lazy(() => import("./components/dashboard/Dashboard"))
 const TopBar = lazy(() => import("./shared-components/top-bar/TopBar"));
@@ -41,7 +42,7 @@ function App() {
                   <Route path="/add">
                       <Suspense fallback={<LoadingFullPage />}>
                           <TopBar place="add"/>
-                          Forms to update data
+                          <AddLog />
                       </Suspense>
                   </Route>
 

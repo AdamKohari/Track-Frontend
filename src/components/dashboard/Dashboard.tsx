@@ -38,7 +38,7 @@ function Dashboard ({mainGoal, latestMainData, goalStart, getUserData, generalLo
         const timePassedRatio = timePassed / availableTime;
         const plannedChange = mainGoal.value - mainGoal.initValue;
         const actualChange = latestMainData.value - mainGoal.initValue;
-        const progressRatio = Math.abs(actualChange / plannedChange);
+        const progressRatio = actualChange / plannedChange;
         return (progressRatio / timePassedRatio) * 100;
     }
 
@@ -60,7 +60,7 @@ function Dashboard ({mainGoal, latestMainData, goalStart, getUserData, generalLo
                                     <div className="progress-circle">
                                         <ProgressCircle
                                             size={120}
-                                            value={percent > 100 ? 100 : percent}/>
+                                            value={percent > 100 ? 100 : (percent < 0 ? 0 : percent)}/>
                                     </div>
                                     <h3>{percent}%-ban terv szerint</h3>
                                 </div> }
