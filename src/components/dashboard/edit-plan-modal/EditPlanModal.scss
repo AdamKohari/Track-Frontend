@@ -1,0 +1,36 @@
+.edit-plan-modal {
+  background-color: white;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: fit-content;
+  padding: 1.5rem;
+  max-height: 100vh;
+  overflow-y: auto;
+  max-width: 85vw;
+  h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  h3 {
+    margin: 1rem 0;
+    font-weight: bold;
+  }
+  .save-plan-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    button:nth-child(2) {
+      margin-left: 1rem;
+    }
+  }
+  .add-new-data-type {
+    display: flex;
+    margin-top: 1rem;
+    button {
+      margin-left: 0.5rem;
+    }
+  }
+}

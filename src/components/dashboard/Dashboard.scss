@@ -1,0 +1,29 @@
+.dashboard {
+  overflow: auto;
+  h1 {
+    text-align: center;
+    margin-top: 2rem;
+  }
+  h2, h3, h4 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  .progress-circle {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  .menu-button {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+  }
+  .last-data-title {
+    margin-bottom: 0;
+    color: gray;
+  }
+  .last-data-date {
+    margin-top: 0.25rem;
+    margin-bottom: 0;
+  }
+}

@@ -1,0 +1,28 @@
+.registration {
+  overflow: auto;
+  h1 {
+    text-align: center;
+    margin-top: 2rem;
+  }
+  .card-cont {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+  }
+  .input-field {
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem 0;
+  }
+  .action-button {
+    display: flex;
+    justify-content: center;
+    padding-top: 0.5rem;
+  }
+  .accept-checkbox {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    margin-top: 0.5rem;
+  }
+}

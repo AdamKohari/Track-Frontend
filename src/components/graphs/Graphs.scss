@@ -1,0 +1,24 @@
+.graphs {
+  overflow: auto;
+  h1 {
+    text-align: center;
+    margin-top: 2rem;
+  }
+  h3 {
+    font-weight: bold;
+    text-align: center;
+    border-top: 1px solid #CECECE;
+    padding: 1rem 0;
+    margin-bottom: 0.5rem;
+  }
+  .data-log-table {
+    .row {
+      display: flex;
+      margin: 0.5rem 0;
+      justify-content: space-between;
+    }
+  }
+  .chart-cont {
+    margin-top: 1.5rem;
+  }
+}
