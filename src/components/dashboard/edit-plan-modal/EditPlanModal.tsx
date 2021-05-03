@@ -42,7 +42,7 @@ function EditPlanModal({close, trackedFields, mainGoal, addNewDataType, saveMain
 
     return (
         <div className="edit-plan-modal">
-            <h2>A terved</h2>
+            <h2>Adattípusok</h2>
             <h3>Trackelt adattípusaid:</h3>
             <div>
                 {trackedFields.length > 0
@@ -64,6 +64,9 @@ function EditPlanModal({close, trackedFields, mainGoal, addNewDataType, saveMain
                         color="primary">Hozzáad</Button>}
             </div>
 
+            <div className="separator"></div>
+
+            <h2>Terv</h2>
             <form onSubmit={formik.handleSubmit}>
                 <h3>A cél:</h3>
                 <div>Adattípus:</div>

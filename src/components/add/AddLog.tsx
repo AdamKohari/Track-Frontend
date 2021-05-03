@@ -27,6 +27,7 @@ function AddLog({trackedFields, setDataLog, generalLoading}: AddLogProps) {
        <div key={field} className="log-input-field">
            <span>{field}</span>
            <TextField type="number" fullWidth={true}
+                      inputProps={{"step": 0.1}}
                       onChange={formik.handleChange}
                       variant="outlined" name={field} />
        </div>

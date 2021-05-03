@@ -51,6 +51,7 @@ export const setCalendar = (calendarEvent: CalendarEventJson) => async (dispatch
         const respJson = await resp.json();
         if (respJson.status === 'OK') {
             dispatch(displayMessage('Sikeres hozzáadás!', {type: "success"}));
+            dispatch(loadCalendar(calendarEvent.year, calendarEvent.month));
         } else {
             dispatch(displayMessage(JSON.stringify(respJson.error),{type: "error"}));
         }

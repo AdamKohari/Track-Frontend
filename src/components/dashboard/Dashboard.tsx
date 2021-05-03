@@ -84,7 +84,7 @@ function Dashboard ({mainGoal, latestMainData, goalStart, getUserData, generalLo
                         <div className="menu-button">
                             <Button variant="contained"
                                     onClick={() => setModalOpen(true)}
-                                    color="primary">Terv módosítása</Button>
+                                    color="primary">Adattípusok és Terv</Button>
                         </div>
 
                         <div className="menu-button">
