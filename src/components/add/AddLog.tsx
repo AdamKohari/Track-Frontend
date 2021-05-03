@@ -16,7 +16,8 @@ function AddLog({trackedFields, setDataLog, generalLoading}: AddLogProps) {
     const now = new Date();
     const formik = useFormik({
         initialValues: {
-            date: '' + now.getFullYear() + '-' + (now.getMonth() < 9 ? '0' : '') + (now.getMonth() + 1) + '-' + now.getDate()
+            date: '' + now.getFullYear() + '-' + (now.getMonth() < 9 ? '0' : '') +
+                (now.getMonth() + 1) + '-' + (now.getDate() < 10 ? '0' : '') + now.getDate()
         },
         onSubmit: (values) => {
             setDataLog(values);
@@ -27,6 +28,7 @@ function AddLog({trackedFields, setDataLog, generalLoading}: AddLogProps) {
        <div key={field} className="log-input-field">
            <span>{field}</span>
            <TextField type="number" fullWidth={true}
+                      inputProps={{"step": 0.1}}
                       onChange={formik.handleChange}
                       variant="outlined" name={field} />
        </div>

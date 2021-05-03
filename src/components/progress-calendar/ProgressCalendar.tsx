@@ -30,9 +30,9 @@ function ProgressCalendar({isLoading, dayLogs, loadCalendar, showLoadingSpinner}
         loadCalendar(new Date().getFullYear(), new Date().getMonth());
     }, [loadCalendar]);
 
-    function getSymbol(day: number): string {
+    function getSymbol(day: number, view: string): string {
         const dayObj = dayLogs.find(item => item.day === day);
-        if (dayObj) {
+        if (dayObj && view === 'month') {
             let retStr = '';
             if (dayObj.tick) retStr += '✅\n';
             if (dayObj.cross) retStr += '❌\n';
@@ -45,7 +45,7 @@ function ProgressCalendar({isLoading, dayLogs, loadCalendar, showLoadingSpinner}
     function tileContent(props: CalendarTileProperties) {
         return (
           <div className="tile-content">
-              {getSymbol(props.date.getDate())}
+              {getSymbol(props.date.getDate(), props.view)}
           </div>
         );
     }
@@ -66,9 +66,6 @@ function ProgressCalendar({isLoading, dayLogs, loadCalendar, showLoadingSpinner}
     function onSelectionDone(): void {
         setModalOpen(false);
         showLoadingSpinner();
-        setTimeout(() => {
-            loadCalendar(new Date().getFullYear(), new Date().getMonth());
-        }, 2000);
     }
 
     const loadingVisible = {
